@@ -5,7 +5,7 @@ import datetime
 import threading
 
 
-path = "C:/GM100k/"
+path = "C:/GM1000k/"
 def createFile(name, finalList):
     filename = name + ".txt"
     file = open(path + filename,'w')
@@ -72,7 +72,7 @@ def looper(f):
 
 def fullList():
     bigList = []
-    f = open("OTC.source",'r')
+    f = open("BelowDollar.source",'r')
     for i in f:
         bigList.append(i)
     f.close()
