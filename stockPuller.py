@@ -5,10 +5,10 @@ import datetime
 import threading
 
 
-
+path = "C:/GM100k/"
 def createFile(name, finalList):
     filename = name + ".txt"
-    file = open(filename,'w')
+    file = open(path + filename,'w')
     for i in finalList:
         temp = ""
         for index, j in enumerate(i):
@@ -23,22 +23,24 @@ def createFile(name, finalList):
 
 def newOrder(name, testList):
     finalList = []
-    for i in testList:            
-        temp = [i[0],name,i[4],i[2],i[3],i[1],i[5],i[6]]
+    for i in testList:
+        spl = i[0].split('-')
+        d = spl[1]+'/'+spl[2]+'/'+spl[0]
+        temp = [d,name,i[4],i[2],i[3],i[1],i[5],"stockname","sector"]
         finalList.append(temp)
     createFile(name, finalList)
 
 
 def readCSV(name):
     filename = name + ".csv"
-    file = open(filename, "r")
+    file = open(path + filename, "r")
     reader = csv.reader(file)
     testList = []
     for index, i in enumerate(reader):
         if index > 0:
             testList.append(i)
     file.close()
-    os.remove(filename)
+    os.remove(path + filename)
     newOrder(name, testList[::-1])
 
     
@@ -57,7 +59,7 @@ def writeCSV(name):
         print("Error Pulling Chart...")
     else:
         filename = name + ".csv"
-        file = open(filename,'w')
+        file = open(path + filename,'w')
         file.write(chartdata.text)
         file.close()
         readCSV(name)
@@ -70,7 +72,7 @@ def looper(f):
 
 def fullList():
     bigList = []
-    f = open("FullTicker.source",'r')
+    f = open("OTC.source",'r')
     for i in f:
         bigList.append(i)
     f.close()
